@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- These are the options displayed in the day drop-down Spinner -->
+    <string-array name="day_options">
+        <item>@string/today</item>
+        <item>@string/tomorrow</item>
+    </string-array>
+    <!-- These are the options displayed in the time drop-down Spinner -->
+    <string-array name="time_slot_options">
+        <item>@string/morning_slot_1</item>
+        <item>@string/morning_slot_2</item>
+        <item>@string/afternoon_slot</item>
+        <item>@string/evening_slot</item>
+    </string-array>
+</resources>

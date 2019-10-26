@@ -1,0 +1,80 @@
+<resources>
+
+    <!-- Common Strings -->
+    <string name="submit_button">Submit</string>
+    <string name="yes_button">Yes</string>
+    <string name="no_button">No</string>
+
+
+    <!-- Navigation Header -->
+    <string name="app_name">WasteToWealth</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Your Name</string>
+    <string name="nav_header_subtitle">youremail@xyz.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="my_profile">My Profile</string>
+
+    <!-- Overflow menu items -->
+    <string name="action_sign_out">Sign Out</string>
+
+    <!-- Navigation Drawer Items-->
+    <string name="home">Fact Cards</string>
+    <string name="waste_pickup">Waste Pickup</string>
+    <string name="segregation_game">Segregation Game</string>
+    <string name="nearby_clean_missions">Nearby Clean Missions</string>
+    <string name="merchandise_store">Merchandise Store</string>
+
+    <!-- content_home.xml -->
+    <string name="no_internet_connection">No Internet Connection</string>
+
+    <!-- Home Screen Items -->
+    <string name="fact_cards">Fact Cards</string>
+    <string name="refresh_icon">Refresh Screen</string>
+
+    <!-- My Profile -->
+    <string name="title_activity_my_account">My Account</string>
+    <string name="name_hint_my_account">Name</string>
+    <string name="email_id_hint_my_account">Email Id</string>
+    <string name="contact_number_hint_my_account">Contact Number</string>
+
+    <!-- Choose Map Location -->
+    <string name="choose_pin_location_text_view">Select Pin Location</string>
+    <string name="edit_text_hint">Search Here</string>
+    <string name="next_button">Next</string>
+
+    <!-- Waste Pickup Service-->
+    <string name="title_activity_waste_pickup">Waste Pickup</string>
+    <string name="request_pickup_heading">REQUEST PICKUP</string>
+    <string name="pickup_history_heading">PICKUP HISTORY</string>
+    <string name="location_coordinates_hint">Location Coordinates/Plus Code</string>
+    <string name="name_hint">Name</string>
+    <string name="contact_number_hint">Contact Number</string>
+    <string name="pickup_address_hint">Pickup Address</string>
+    <string name="landmark_hint">Landmark</string>
+    <string name="city_hint">City</string>
+    <string name="pin_code_hint">Pin Code</string>
+    <string name="submit_button_hint">Submit</string>
+    <string name="choose_pickup_slot_title">Choose Pickup Slot</string>
+    <string name="today">Today</string>
+    <string name="tomorrow">Tomorrow</string>
+    <string name="morning_slot_1">6AM - 9AM</string>
+    <string name="morning_slot_2">9AM - 12PM</string>
+    <string name="afternoon_slot">12PM - 3PM</string>
+    <string name="evening_slot">3PM - 6PM</string>
+    <string name="pickup_request_confirmation_dialog">Are you sure that you want to place a pickup order?</string>
+    <string name="pickup_order_successful_dialog_title">Success</string>
+    <string name="pickup_order_successful_dialog_message">Your pickup order has been successfully placed.</string>
+
+    <!-- Merchandise Store Service -->
+    <string name="title_activity_merchandise_store">Merchandise Store</string>
+
+    <!-- Segregation Game -->
+    <string name="title_activity_segregation_game">Segregation Game</string>
+
+    <!--    Permissions    -->
+    <string name="permission_rationale_location">Access to the location service is required to demonstrate the \'my location\' feature, which shows your current location on the map.</string>
+    <string name="location_permission_denied">This sample requires location permission to enable the \'my location\' layer. Please try again and grant access to use the location.\nIf the permission has been permanently denied, it can be enabled from the System Settings &gt; Apps &gt; \'Google Maps API Demos\'.</string>
+    <string name="permission_required_toast">Location permission is required for this demo.</string>
+
+</resources>

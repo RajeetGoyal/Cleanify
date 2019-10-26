@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "486814930888",
+    "firebase_url": "https://wastetowealth-6b520.firebaseio.com",
+    "project_id": "wastetowealth-6b520",
+    "storage_bucket": "wastetowealth-6b520.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:486814930888:android:6975732cb2a00bc0",
+        "android_client_info": {
+          "package_name": "com.example.wastetowealth"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "486814930888-ectg8b9p3uugvsfnr7n3ca3d77osq00s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.wastetowealth",
+            "certificate_hash": "6b6828cf64614a2c8014cdc07ba684625e64abcc"
+          }
+        },
+        {
+          "client_id": "486814930888-7rmmscpvisll6ml1ciqrjuo3rl559q0i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBIXTBrBy6K-Y1Cy1yA_x5__Kx5cIdOFww"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "486814930888-7rmmscpvisll6ml1ciqrjuo3rl559q0i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
