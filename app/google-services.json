@@ -1,42 +1,41 @@
 {
   "project_info": {
-    "project_number": "486814930888",
-    "firebase_url": "https://wastetowealth-6b520.firebaseio.com",
-    "project_id": "wastetowealth-6b520",
-    "storage_bucket": "wastetowealth-6b520.appspot.com"
+    "project_number": "1051474174771",
+    "project_id": "cleanify-e538e",
+    "storage_bucket": "cleanify-e538e.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:486814930888:android:6975732cb2a00bc0",
+        "mobilesdk_app_id": "1:1051474174771:android:b3b61c7724a6b68208d446",
         "android_client_info": {
-          "package_name": "com.example.wastetowealth"
+          "package_name": "com.example.cleanify"
         }
       },
       "oauth_client": [
         {
-          "client_id": "486814930888-ectg8b9p3uugvsfnr7n3ca3d77osq00s.apps.googleusercontent.com",
+          "client_id": "1051474174771-9fka63qf8jujk5ff17mjqsi91ktara6b.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.wastetowealth",
-            "certificate_hash": "6b6828cf64614a2c8014cdc07ba684625e64abcc"
+            "package_name": "com.example.cleanify",
+            "certificate_hash": "22efcffa06d971394f87602021f85d0948c06f3d"
           }
         },
         {
-          "client_id": "486814930888-7rmmscpvisll6ml1ciqrjuo3rl559q0i.apps.googleusercontent.com",
+          "client_id": "1051474174771-098ebibbs93sksm00bdtvs2gg1t3albt.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBIXTBrBy6K-Y1Cy1yA_x5__Kx5cIdOFww"
+          "current_key": "AIzaSyAKJ3n-XCdY7UnFEbg6ZMQ8BkmPcFi3xYM"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "486814930888-7rmmscpvisll6ml1ciqrjuo3rl559q0i.apps.googleusercontent.com",
+              "client_id": "1051474174771-098ebibbs93sksm00bdtvs2gg1t3albt.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

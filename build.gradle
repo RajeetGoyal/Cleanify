@@ -3,13 +3,16 @@
 buildscript {
     repositories {
         google() // Google Maven's repository
-        jcenter()
+        mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.0.0'
+        classpath 'com.android.tools.build:gradle:7.0.3'
 
-        //It requires google-services.json to work
+        // Google Services plugin. It requires google-services.json to work
         classpath 'com.google.gms:google-services:4.3.10'
+
+        // Required for storing api key safely
+        classpath "com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin:2.0.0"
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -19,7 +22,7 @@ buildscript {
 allprojects {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
 }
 
