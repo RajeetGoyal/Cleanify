@@ -7,7 +7,7 @@
 
 
     <!-- Navigation Header -->
-    <string name="app_name">WasteToWealth</string>
+    <string name="app_name">Cleanify</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Your Name</string>
@@ -56,15 +56,18 @@
     <string name="pin_code_hint">Pin Code</string>
     <string name="submit_button_hint">Submit</string>
     <string name="choose_pickup_slot_title">Choose Pickup Slot</string>
+    <string name="day_hint">Select Day</string>
     <string name="today">Today</string>
     <string name="tomorrow">Tomorrow</string>
+    <string name="time_hint">Select Time</string>
     <string name="morning_slot_1">6AM - 9AM</string>
     <string name="morning_slot_2">9AM - 12PM</string>
     <string name="afternoon_slot">12PM - 3PM</string>
     <string name="evening_slot">3PM - 6PM</string>
     <string name="pickup_request_confirmation_dialog">Are you sure that you want to place a pickup order?</string>
-    <string name="pickup_order_successful_dialog_title">Success</string>
-    <string name="pickup_order_successful_dialog_message">Your pickup order has been successfully placed.</string>
+    <string name="pickup_order_success_title">Success</string>
+    <string name="pickup_order_success_message">Your pickup order has been successfully placed.</string>
+    <string name="required">*Required</string>
 
     <!-- Merchandise Store Service -->
     <string name="title_activity_merchandise_store">Merchandise Store</string>
