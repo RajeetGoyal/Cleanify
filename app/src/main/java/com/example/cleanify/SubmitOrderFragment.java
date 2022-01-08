@@ -1,9 +1,8 @@
 package com.example.cleanify;
 
-import static com.example.cleanify.utilities.Const.GEOCODER_LOADER_ID;
 
 import android.annotation.SuppressLint;
-import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,19 +15,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
-import androidx.loader.app.LoaderManager;
-import androidx.loader.content.Loader;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
+import com.example.cleanify.data.AppDatabase;
 import com.example.cleanify.data.Order;
-import com.example.cleanify.loaders.GeocoderLoader;
 import com.example.cleanify.utilities.Const;
-import com.example.cleanify.utilities.Utils;
+import com.example.cleanify.viewmodels.SubmitOrderViewModel;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -37,12 +32,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import rx.Observable;
+
 /**
  * A simple {@link Fragment} subclass.
  */
-public class PlacePickupOrderFragment extends Fragment {
+public class SubmitOrderFragment extends Fragment {
     // Pickup Order fields
-    private LoaderManager mLoaderManager;
     private TextInputEditText mNameField, mContactField, mAddressField, mLandmarkField, mPinCodeField,
             mCityField;
     private AutoCompleteTextView mDayField, mTimeField;
@@ -55,7 +51,16 @@ public class PlacePickupOrderFragment extends Fragment {
     private TextInputLayout mTimeFieldLayout;
     private Double mLatitude, mLongitude;
 
-    public PlacePickupOrderFragment() {
+    private SubmitOrderViewModel viewModel;
+
+    public SubmitOrderFragment() {
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        viewModel = new ViewModelProvider(this).get(SubmitOrderViewModel.class);
     }
 
     @Override
@@ -83,17 +88,33 @@ public class PlacePickupOrderFragment extends Fragment {
         Button button = requireActivity().findViewById(R.id.submit_button);
         button.setOnClickListener(v -> onSubmitButtonClick());
 
-        // Initialize loader for fetching address from coordinates
-        mLoaderManager = LoaderManager.getInstance(this);
-        if (Utils.isConnectedToInternet(requireActivity())) {
-            mLoaderManager.initLoader(GEOCODER_LOADER_ID, null, geocoderLoaderCallbacks);
-        }
+        Observer<String> addressObserver = s -> mAddressField.setText(s);
+        viewModel.getAddress().observe(requireActivity(), addressObserver);
+
+        Observer<String> pinCodeObserver = s -> mPinCodeField.setText(s);
+        viewModel.getPinCode().observe(requireActivity(), pinCodeObserver);
+
+        Observer<String> cityObserver = s -> mCityField.setText(s);
+        viewModel.getCity().observe(requireActivity(), cityObserver);
+
+        Observer<Boolean> orderStatusObserver = isSuccessful -> {
+            if (isSuccessful) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
+                builder.setTitle(R.string.pickup_order_success_title);
+                builder.setMessage(R.string.pickup_order_success_message);
+                builder.setNeutralButton("OK", (dialogInterface, i) -> requireActivity().finish());
+                builder.show();
+            }
+        };
+        viewModel.getIsOrderSubmitted().observe(requireActivity(), orderStatusObserver);
+
+        Geocoder geocoder = new Geocoder(requireActivity(), Locale.getDefault());
+        viewModel.loadAddress(geocoder, mLatitude, mLongitude);
     }
 
     @Override
     public void onDestroyOptionsMenu() {
         super.onDestroyOptionsMenu();
-        mLoaderManager.destroyLoader(GEOCODER_LOADER_ID);
     }
 
     private void onSubmitButtonClick() {
@@ -101,33 +122,9 @@ public class PlacePickupOrderFragment extends Fragment {
         boolean isUserLoggedIn = validateAuthentication();
 
         if (isValidationSuccessful && isUserLoggedIn) {
-            // Write a message to the database
-            FirebaseDatabase database = FirebaseDatabase.getInstance();
-            DatabaseReference databaseReference = database.getReference();
-
             Order order = createOrder();
-            saveDataToCloudDatabase(order, databaseReference);
+            viewModel.placeOrder(order);
         }
-    }
-
-    private void saveDataToCloudDatabase(Order order, DatabaseReference databaseReference) {
-        String userId = getFirebaseUserId();
-        if (userId != null) {
-            databaseReference.child("users").child(userId).setValue(order)
-                    .addOnSuccessListener(aVoid -> {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
-                        builder.setTitle(R.string.pickup_order_success_title);
-                        builder.setMessage(R.string.pickup_order_success_message);
-                        builder.setNeutralButton("OK", (dialogInterface, i) -> requireActivity().finish());
-                        builder.show();
-                    })
-                    .addOnFailureListener(e -> {
-                        // Write failed
-                        // ...
-                    });
-        }
-
-
     }
 
     /***
@@ -135,21 +132,21 @@ public class PlacePickupOrderFragment extends Fragment {
      */
     private Order createOrder() {
         Order order = new Order();
-        order.name = String.valueOf(mNameField.getText());
-        order.contactNumber = String.valueOf(mContactField.getText());
-        order.address = String.valueOf(mAddressField.getText());
-        order.landmark = String.valueOf(mLandmarkField.getText());
-        order.latitude = mLatitude;
-        order.longitude = mLongitude;
-        order.pinCode = String.valueOf(mPinCodeField.getText());
-        order.city = String.valueOf(mCityField.getTag());
+        order.setName(String.valueOf(mNameField.getText()));
+        order.setContactNumber(String.valueOf(mContactField.getText()));
+        order.setAddress(String.valueOf(mAddressField.getText()));
+        order.setLandmark(String.valueOf(mLandmarkField.getText()));
+        order.setLatitude(mLatitude);
+        order.setLongitude(mLongitude);
+        order.setPinCode(String.valueOf(mPinCodeField.getText()));
+        order.setCity(String.valueOf(mCityField.getTag()));
         try {
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy HH:mm:ss", Locale.ENGLISH);
-            order.dateTime = dateFormat.format(new Date());
+            order.setDateTime(dateFormat.format(new Date()));
         } catch (Exception ignored) {
         }
-        order.daySlot = String.valueOf(mDayField.getText());
-        order.timeSlot = String.valueOf(mTimeField.getText());
+        order.setDaySlot(String.valueOf(mDayField.getText()));
+        order.setTimeSlot(String.valueOf(mTimeField.getText()));
         return order;
     }
 
@@ -235,9 +232,7 @@ public class PlacePickupOrderFragment extends Fragment {
     }
 
     private boolean validateAuthentication() {
-        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-        FirebaseUser user = firebaseAuth.getCurrentUser();
-        return user != null;
+        return AppDatabase.getUser() != null;
     }
 
     /***
@@ -347,15 +342,6 @@ public class PlacePickupOrderFragment extends Fragment {
         return result;
     }
 
-    private String getFirebaseUserId() {
-        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-        FirebaseUser user = firebaseAuth.getCurrentUser();
-        if (user != null) {
-            return user.getUid();
-        }
-        return null;
-    }
-
     private List<String> getDayList() {
         List<String> dayList = new ArrayList<>();
         dayList.add(getString(R.string.today));
@@ -371,31 +357,4 @@ public class PlacePickupOrderFragment extends Fragment {
         timeList.add(getString(R.string.evening_slot));
         return timeList;
     }
-
-    private final LoaderManager.LoaderCallbacks<List<Address>> geocoderLoaderCallbacks = new
-            LoaderManager.LoaderCallbacks<>() {
-                @NonNull
-                @Override
-                public Loader<List<Address>> onCreateLoader(int id, @Nullable Bundle args) {
-                    return new GeocoderLoader(getContext(), mLatitude, mLongitude);
-                }
-
-                @Override
-                public void onLoadFinished(@NonNull Loader<List<Address>> loader, List<Address> data) {
-                    if (data != null) {
-                        mAddressField.setText(data.get(0).getAddressLine(0));
-
-                        mPinCodeField.setText(data.get(0).getPostalCode());
-                        mPinCodeField.setEnabled(false);
-
-                        mCityField.setText(data.get(0).getLocality());
-                        mCityField.setEnabled(false);
-                    }
-                }
-
-                @Override
-                public void onLoaderReset(@NonNull Loader<List<Address>> loader) {
-
-                }
-            };
 }

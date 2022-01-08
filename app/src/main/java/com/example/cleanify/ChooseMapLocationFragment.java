@@ -224,7 +224,7 @@ public class ChooseMapLocationFragment extends Fragment implements
 
     /**
      * Handling actions after the user clicks the next button.
-     * Starts the {@link PlacePickupOrderFragment}, if coordinates are not null.
+     * Starts the {@link SubmitOrderFragment}, if coordinates are not null.
      */
     private void nextButtonClick() {
         Button nextButton = requireView().findViewById(R.id.button);
@@ -234,7 +234,7 @@ public class ChooseMapLocationFragment extends Fragment implements
                 Bundle bundle = new Bundle();
                 bundle.putDouble(Const.LATITUDE_KEY, mMarker.getPosition().latitude);
                 bundle.putDouble(Const.LONGITUDE_KEY, mMarker.getPosition().longitude);
-                PlacePickupOrderFragment fragment = new PlacePickupOrderFragment();
+                SubmitOrderFragment fragment = new SubmitOrderFragment();
                 fragment.setArguments(bundle);
                 requireFragmentManager().beginTransaction()
                         .replace(R.id.fragments_container, fragment)
